@@ -5,10 +5,19 @@ public class CustomPackageBuilder implements PackageBuilder {
     private int numOfExplosiveTags;
     private int numOfSmokeBombs;
     private int numOfMedKits;
-    private NinjaToolPackage ninjaToolPackage;
 
     // falta constructor (crear el paquete)
+    public CustomPackageBuilder(int kunais, int shurikens, int explosiveTags, int smokeBombs, int medKits){
+        numOfKunais = kunais;
+        numOfShurikens = shurikens;
+        numOfExplosiveTags = explosiveTags;
+        numOfSmokeBombs = smokeBombs;
+        numOfMedKits = medKits;
+        // Vacio ??
+    }
 
+    // Discutir estos metodos
+    
     public void addNumOfKunais(int newAmount){
         numOfKunais += newAmount;
     }
@@ -28,34 +37,31 @@ public class CustomPackageBuilder implements PackageBuilder {
     public void addNumOfMedKits(int newAmount){
         numOfMedKits += newAmount;
     }
-
+    //
+    
     @Override
     public void buildKunais(){
-
+        tools.add("Kunais", numOfKunais);
     }
 
     @Override
     public void buildShurikens(){
-
+        tools.add("Shurikens", numOfShurikens);
     }
 
     @Override
     public void buildExplosiveTags(){
-        
+        tools.add("Papeles bomba", numOfExplosiveTags);
     }
 
     @Override
     public void buildSmokeBombs(){
-
+        tools.add("Bombas de humo", numOfSmokeBombs);
     }
-
+    
     @Override
     public void buildMedKits(){
-
+        tools.add("Botiquines", numOfMedKits);
     }
-
-    @Override
-    public NinjaToolPackage getPackage(){
-        return ninjaToolPackage;
-    }
+    
 }

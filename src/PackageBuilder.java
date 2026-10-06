@@ -1,10 +1,21 @@
-public interface PackageBuilder {
+public abstract class PackageBuilder {
 
-    void buildKunais();
-    void buildShurikens();
-    void buildExplosiveTags();
-    void buildSmokeBombs();
-    void buildMedKits();
-    NinjaToolPackage getPackage();
+    private String name;
+    private Hashtable<NinjaTool, Integer> tools;
+    
+    public void buildKunais();
+    public void buildShurikens();
+    public void buildExplosiveTags();
+    public void buildSmokeBombs();
+    public void buildMedKits();
+    
+    public NinjaToolPackage getPackage(){
+        NinjaToolPackage newPackage = new NinjaToolPackage();
+
+        newPackage.setName(name);
+        newPackage.setTools(tools); // Probablemente mejor que addTool()
+
+        return newPackage;
+    }
     
 }

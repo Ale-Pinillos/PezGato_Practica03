@@ -2,10 +2,15 @@ public class Aspirant implements Ninja {
 
     private String name;
     private int age;
-    private String clan; // falta decidir si clan es String o enum 
+    private Clan clan;
     private int abilityLevel;
 
-    // falta constructor 
+    public Aspirant(String name, int age, Clan clan, int abilityLevel){
+        this.name = name;
+        this.age = age;
+        this.clan = clan;
+        this.abilityLevel = abilityLevel;
+    }
 
     @Override
     public String name(){ 
@@ -18,7 +23,7 @@ public class Aspirant implements Ninja {
     }
 
     @Override
-    public String clan(){ 
+    public Clan clan(){ 
         return clan;
     }
 

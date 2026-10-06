@@ -1,6 +1,7 @@
 public class DragonValleyGround extends TrainingGround {
     
-    public DragonValleyGround(String name, String description){
-        
+    public DragonValleyGround(){
+        name = "Valle del Dragon";
+        descripcion = "TODO";
     }
 }

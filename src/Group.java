@@ -7,14 +7,26 @@ public class Group {
     private NinjaToolPackage currentToolPackage;
     private TrainingGround currentTrainingGround;
 
-    // falta constructor
+    public Group(Volunteer leader){
+        this.leader = leader;
+        aspirants = new ArrayList<>();
+        
+        currentToolPackage = null;
+        currentTrainingGround = null;
+    }
 
     public String addAspirant(Aspirant newAspirant){
-        
+        aspirants.add(newAspirant);
     }
 
     public int totalAbilityLevel(){
+        int totalAbilityLevel = leader.abilityLevel();
+        
+        for(Aspirant a:aspirants){
+            totalAbilityLevel += a.abilityLevel();
+        }
 
+        return AbilityLevel;
     }
 
     public NinjaToolPackage currentToolPackage(){
@@ -34,6 +46,6 @@ public class Group {
     }
 
     public String toString(){
-
+        // TODO
     }
 }

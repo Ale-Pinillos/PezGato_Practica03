@@ -2,11 +2,17 @@ public class Volunteer implements Ninja {
 
     private String name;
     private int age;
-    private String clan; // falta decidir si es String o enum
+    private Clan clan;
     private int abilityLevel;
-    private String rank; // falta decidir si es String o enum
+    private Rank rank;
 
-    // falta constructor
+    public Volunteer(String name, int age, Clan clan, int abilityLevel, Rank rank){
+        this.name = name;
+        this.age = age;
+        this.clan = clan;
+        this.abilityLevel = abilityLevel;
+        this.rank = rank;
+    }
 
     @Override
     public String name(){
@@ -19,7 +25,7 @@ public class Volunteer implements Ninja {
     }
 
     @Override
-    public String clan(){
+    public Clan clan(){
         return clan;
     }
 
@@ -28,15 +34,20 @@ public class Volunteer implements Ninja {
         return abilityLevel;
     }
 
-    public String rank(){
+    public Rank rank(){
         return rank;
     }
 
     public int maxAspirants(){
-
+        if(this.rank == Rank.GENIN)
+            return 1;
+        else if(this.rank = Rank.CHUNIN)
+            return 2;
+        else
+            return 3;
     }
 
     public String toString(){
-        
+        //TODO
     }
 }

@@ -5,10 +5,13 @@ public class VolunteerRegistry implements Iterable<Volunteer> {
     private ArrayList<Volunteer> listOfVolunteers;
 
     // falta constructor
+    public VolunteerRegistry(){
+        listOfVolunteers = new ArrayList<>();
+    }
 
     @Override
     public VolunteerIterator iterator(){
-
+        return new VolunteerIterator(this.listOfVolunteers);
     }
 
     public int size() {

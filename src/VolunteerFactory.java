@@ -1,7 +1,7 @@
 public class VolunteerFactory extends NinjaFactory {
 
     @Override
-    public Ninja createNinja(String name, int age, String clan, int abilityLevel, String rank){
-        
+    public Ninja createNinja(String name, int age, Clan clan, int abilityLevel, Rank rank){
+        return new Volunteer(name, age, clan, abilityLevel, rank);
     }
 }

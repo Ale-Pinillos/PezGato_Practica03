@@ -1,6 +1,7 @@
 public class ShadowForestGround extends TrainingGround {
 
-    public ShadowForestGround(String name, String description){
-        
+    public ShadowForestGround(){
+        name = "Bosque sombrio";
+        descripcion = "TODO";
     }
 }
