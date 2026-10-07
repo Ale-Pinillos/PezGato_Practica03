@@ -1,4 +1,6 @@
-public class CustomPackageBuilder implements PackageBuilder {
+import java.util.Hashtable;
+
+public class CustomPackageBuilder extends PackageBuilder {
     
     private int numOfKunais;
     private int numOfShurikens;
@@ -6,17 +8,12 @@ public class CustomPackageBuilder implements PackageBuilder {
     private int numOfSmokeBombs;
     private int numOfMedKits;
 
-    // falta constructor (crear el paquete)
-    public CustomPackageBuilder(int kunais, int shurikens, int explosiveTags, int smokeBombs, int medKits){
-        numOfKunais = kunais;
-        numOfShurikens = shurikens;
-        numOfExplosiveTags = explosiveTags;
-        numOfSmokeBombs = smokeBombs;
-        numOfMedKits = medKits;
-        // Vacio ??
+    
+    public CustomPackageBuilder(){
+        
+        tools = new Hashtable<>();
     }
 
-    // Discutir estos metodos
     
     public void addNumOfKunais(int newAmount){
         numOfKunais += newAmount;
@@ -41,27 +38,27 @@ public class CustomPackageBuilder implements PackageBuilder {
     
     @Override
     public void buildKunais(){
-        tools.add("Kunais", numOfKunais);
+        tools.put(new NinjaTool("Kunais", 255), numOfKunais);
     }
 
     @Override
     public void buildShurikens(){
-        tools.add("Shurikens", numOfShurikens);
+        tools.put(new NinjaTool("Shurikens", 35), numOfShurikens);
     }
 
     @Override
     public void buildExplosiveTags(){
-        tools.add("Papeles bomba", numOfExplosiveTags);
+        tools.put(new NinjaTool("Papeles bomba", 5), numOfExplosiveTags);
     }
 
     @Override
     public void buildSmokeBombs(){
-        tools.add("Bombas de humo", numOfSmokeBombs);
+        tools.put(new NinjaTool("Bombas de humo", 85), numOfSmokeBombs);
     }
     
     @Override
     public void buildMedKits(){
-        tools.add("Botiquines", numOfMedKits);
+        tools.put(new NinjaTool("Botiquines", 320), numOfMedKits);
     }
     
 }

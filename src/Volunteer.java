@@ -41,7 +41,7 @@ public class Volunteer implements Ninja {
     public int maxAspirants(){
         if(this.rank == Rank.GENIN)
             return 1;
-        else if(this.rank = Rank.CHUNIN)
+        else if(this.rank == Rank.CHUNIN)
             return 2;
         else
             return 3;
@@ -49,5 +49,6 @@ public class Volunteer implements Ninja {
 
     public String toString(){
         //TODO
+        return "";
     }
 }

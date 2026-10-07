@@ -1,5 +1,9 @@
+import java.util.Hashtable;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class NinjaAcademy {
 
@@ -71,7 +75,7 @@ public class NinjaAcademy {
             aspirantsLeft = 3;
 
         Set<Integer> ids = listOfAspirants.keySet();
-        Iterator idsIterator = ids.iterator();
+        Iterator<Integer> idsIterator = ids.iterator();
 
         while(aspirantsLeft > 0 && idsIterator.hasNext()){
             int currentID = idsIterator.next();
@@ -100,7 +104,7 @@ public class NinjaAcademy {
         int chosen = 0;
 
         NinjaToolDirector director;
-        PackageBuilder builder;
+        PackageBuilder builder = null;
 
         while(!packageChosen){
             chosen = sc.nextInt();
@@ -109,22 +113,26 @@ public class NinjaAcademy {
             case 1:
                 System.out.println("Se eligio el Paquete Basico\n");
                 builder = new BasicPackageBuilder();
+                packageChosen = true;
                 break;
             case 2:
                 System.out.println("Se eligio el Paquete Avanzado\n");
                 builder = new TacticalPackageBuilder();
+                packageChosen = true;
                 break;
             case 3:
                 System.out.println("Se eligio el Paquete Tactico\n");
                 builder = new AdvancedPackageBuilder();
+                packageChosen = true;
                 break;
             case 4:
                 System.out.println("Se eligio el Paquete Personalizado\n");
                 builder = createCustomPackage(sc);
+                packageChosen = true;
                 break;
             default:
 
-            System.out.println("La eleccion no es una respuesta valida, eliga nuevamente"):
+                System.out.println("La eleccion no es una respuesta valida, eliga nuevamente");
                 break;
             }
         }
@@ -142,23 +150,23 @@ public class NinjaAcademy {
 
         System.out.print("Eliga la cantidad de kunais para el paquete: ");
         int amount = sc.nextInt();
-        packageBuilder.addKunais(amount);
+        packageBuilder.addNumOfKunais(amount);
 
         System.out.print("Eliga la cantidad de shurikens para el paquete: ");
-        int amount = sc.nextInt();
-        packageBuilder.addShurikens(amount);
+        amount = sc.nextInt();
+        packageBuilder.addNumOfShurikens(amount);
 
         System.out.print("Eliga la cantidad de papeles bomba para el paquete: ");
-        int amount = sc.nextInt();
-        packageBuilder.addExplosiveTags(amount);
+        amount = sc.nextInt();
+        packageBuilder.addNumOfExplosiveTags(amount);
 
         System.out.print("Eliga la cantidad de bombas de humo para el paquete: ");
-        int amount = sc.nextInt();
-        packageBuilder.addSmokeBombs(amount);
+        amount = sc.nextInt();
+        packageBuilder.addNumOfSmokeBombs(amount);
 
         System.out.print("Eliga la cantidad de botiquines para el paquete: ");
-        int amount = sc.nextInt();
-        packageBuilder.addMedKits(amount);
+        amount = sc.nextInt();
+        packageBuilder.addNumOfMedKits(amount);
 
         return packageBuilder;
     }
@@ -190,7 +198,7 @@ public class NinjaAcademy {
 
 
     // LEFT TO CODE
-    private static string showMainMenu(){
+    private static String showMainMenu(){
         return "";
     }
 
@@ -203,7 +211,7 @@ public class NinjaAcademy {
     }
 
     private static ArrayList<Volunteer> generateVolunteers(){
-        ArrayList<Volunteer> listOfVolunteers = new ArrayList();
+        ArrayList<Volunteer> listOfVolunteers = new ArrayList<>();
 
         // TODO
 

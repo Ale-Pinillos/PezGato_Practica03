@@ -43,6 +43,7 @@ public class Aspirant implements Ninja {
     }
 
     public String toString(){
-        
+        //TODO
+        return "";
     }
 }

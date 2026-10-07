@@ -28,7 +28,7 @@ public class Group {
             totalAbilityLevel += a.abilityLevel();
         }
 
-        return AbilityLevel;
+        return totalAbilityLevel;
     }
 
     public NinjaToolPackage currentToolPackage(){
@@ -49,5 +49,6 @@ public class Group {
 
     public String toString(){
         // TODO
+        return "";
     }
 }

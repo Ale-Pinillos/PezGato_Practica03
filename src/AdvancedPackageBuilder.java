@@ -1,4 +1,6 @@
-public class AdvancedPackageBuilder implements PackageBuilder {
+import java.util.Hashtable;
+
+public class AdvancedPackageBuilder extends PackageBuilder {
 
     private static final int NUMBER_OF_KUNAIS = 0;
     private static final int NUMBER_OF_SHURIKENS = 2;
@@ -6,34 +8,34 @@ public class AdvancedPackageBuilder implements PackageBuilder {
     private static final int NUMBER_OF_SMOKE_BOMBS = 2;
     private static final int NUMBER_OF_MED_KITS = 2;
 
-    // falta constructor
+    
     public AdvancedPackageBuilder(){
-        
+        tools = new Hashtable<>();
     }
 
     @Override
     public void buildKunais(){
-        tools.add("Kunais", NUMBER_OF_KUNAIS);
+        tools.put(new NinjaTool("Kunais", 255), NUMBER_OF_KUNAIS);
     }
 
     @Override
     public void buildShurikens(){
-        tools.add("Shurikens", NUMBER_OF_SHURIKENS);
+        tools.put(new NinjaTool("Shurikens", 35), NUMBER_OF_SHURIKENS);
     }
 
     @Override
     public void buildExplosiveTags(){
-        tools.add("Papeles bomba", NUMBER_OF_EXPLOSIVE_TAGS);
+        tools.put(new NinjaTool("Papeles bomba", 5), NUMBER_OF_EXPLOSIVE_TAGS);
     }
 
     @Override
     public void buildSmokeBombs(){
-        tools.add("Bombas de humo", NUMBER_OF_SMOKE_BOMBS);
+        tools.put(new NinjaTool("Bombas de humo", 85), NUMBER_OF_SMOKE_BOMBS);
     }
     
     @Override
     public void buildMedKits(){
-        tools.add("Botiquines", NUMBER_OF_MED_KITS);
+        tools.put(new NinjaTool("Botiquines", 320), NUMBER_OF_MED_KITS);
     }
     
 }

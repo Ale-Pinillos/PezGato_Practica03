@@ -2,11 +2,12 @@ public class NinjaToolDirector {
     
     private PackageBuilder toolPackageBuilder;
 
-    Public NinjaToolDirector(){
-        
+    public NinjaToolDirector(PackageBuilder builder){
+        toolPackageBuilder = builder;
     }
 
-    public void construct(){
-        
+    public NinjaToolPackage construct(){
+        // TODO
+        return null;
     }
 }

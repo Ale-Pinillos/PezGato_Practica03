@@ -1,11 +1,11 @@
 import java.util.Hashtable;
+import java.util.Set;
 
 public class NinjaToolPackage{
 
     private String name;
     private Hashtable<NinjaTool, Integer> listOfTools;
 
-    // falta constructor
     public NinjaToolPackage(){}
 
     public void setName(String newName){
@@ -16,9 +16,8 @@ public class NinjaToolPackage{
         return listOfTools;
     }
 
-    // Por que no setTools ??
-    public void addTool(NinjaTool tool, int amount){
-        // falta decidir que pasa con cantidad 0 y con una herramienta repetida
+    public void setTools(Hashtable<NinjaTool, Integer> tools){
+        listOfTools = tools;
     } 
 
     public int totalWeight(){
@@ -27,13 +26,14 @@ public class NinjaToolPackage{
         Set<NinjaTool> tools = listOfTools.keySet();
         
         for(NinjaTool t: tools){
-            totalWeight += t.get(t) * t.weight();
+            totalWeight += listOfTools.get(t) * t.weight();
         }
 
         return totalWeight;
     }
 
     public String toString(){
-        
+        // TODO
+        return "";
     }
 }
