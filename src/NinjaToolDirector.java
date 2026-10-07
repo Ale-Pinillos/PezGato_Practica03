@@ -2,7 +2,11 @@ public class NinjaToolDirector {
     
     private PackageBuilder toolPackageBuilder;
 
-    public void construct();{
+    Public NinjaToolDirector(){
+        
+    }
+
+    public void construct(){
         
     }
 }

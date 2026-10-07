@@ -12,6 +12,7 @@ public class BasicPackageBuilder implements PackageBuilder {
 
     @Override
     public void buildKunais(){
+        // Falta agregar el peso de cada herramienta
         tools.add("Kunais", NUMBER_OF_KUNAIS);
     }
 

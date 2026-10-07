@@ -17,6 +17,8 @@ public class Group {
 
     public String addAspirant(Aspirant newAspirant){
         aspirants.add(newAspirant);
+
+        return newAspirant.name() + " fue asignado al grupo de " + leader.name();
     }
 
     public int totalAbilityLevel(){

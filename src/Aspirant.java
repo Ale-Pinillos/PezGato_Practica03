@@ -1,5 +1,8 @@
 public class Aspirant implements Ninja {
 
+    private static int newID = 1;
+
+    private int id;
     private String name;
     private int age;
     private Clan clan;
@@ -10,6 +13,9 @@ public class Aspirant implements Ninja {
         this.age = age;
         this.clan = clan;
         this.abilityLevel = abilityLevel;
+
+        id = newID;
+        newID++;
     }
 
     @Override
@@ -30,6 +36,10 @@ public class Aspirant implements Ninja {
     @Override
     public int abilityLevel(){ 
         return abilityLevel;
+    }
+
+    public int getID(){
+        return id;
     }
 
     public String toString(){

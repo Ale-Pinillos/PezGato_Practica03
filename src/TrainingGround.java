@@ -1,9 +1,7 @@
-public class TrainingGround {
+public abstract class TrainingGround {
     
     private String name;
     private String description;
-
-    // falta constructor
 
     public String name(){
         return name;
@@ -14,6 +12,6 @@ public class TrainingGround {
     }
 
     public String toString(){
-
+        
     }
 }
