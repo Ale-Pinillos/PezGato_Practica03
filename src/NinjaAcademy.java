@@ -11,6 +11,11 @@ public class NinjaAcademy {
     private static AspirantFactory aspirantFactory = new AspirantFactory();
     private static VolunteerFactory volunteerFactory = new VolunteerFactory();
 
+    /**
+     * Main execution method that runs the ninja group assignment simulation.
+     * 
+     * @command arguments command line arguments
+     */
     public static void main(String[] args){
 
         // Initialize variables and create ninjas
@@ -32,6 +37,7 @@ public class NinjaAcademy {
         // Groups and packages
         while(!listOfAspirants.isEmpty() && !listOfVolunteers.isEmpty()){
 
+            System.out.println("=============================================================");
             System.out.println("Formando grupo " + currentGroup + "\n");
 
             currentGroup++;
@@ -50,6 +56,7 @@ public class NinjaAcademy {
             TrainingGround newGround = assignGround(newGroup.totalAbilityLevel());
             newGroup.setTrainingGround(newGround);
             System.out.println("Se asigno un campo de entrenamiento al grupo");
+            System.out.println("=============================================================\n");
 
             groupsSoFar.add(newGroup);
         }
@@ -64,17 +71,20 @@ public class NinjaAcademy {
         
     }
 
+    /**
+     * Forms a new group by pairing a volunteer leader with the maximum allowed number of aspirants.
+     * 
+     * @param listOfAspirants available aspirants hashtable
+     * @param leader the volunteer leading the group
+     * @return the created Group instance
+     */
     private static Group formGroup(Hashtable<Integer, Aspirant> listOfAspirants, Volunteer leader){
         Group newGroup = new Group(leader);
 
-        int aspirantsLeft = 1;
+        int aspirantsLeft = leader.maxAspirants();
 
-        if(leader.rank() == Rank.CHUNIN)
-            aspirantsLeft = 2;
-        else if(leader.rank() == Rank.JONIN)
-            aspirantsLeft = 3;
-
-        Set<Integer> ids = listOfAspirants.keySet();
+        // This is to prevent a ConcurrentModificationException
+        ArrayList<Integer> ids = new ArrayList<>(listOfAspirants.keySet());
         Iterator<Integer> idsIterator = ids.iterator();
 
         while(aspirantsLeft > 0 && idsIterator.hasNext()){
@@ -89,6 +99,12 @@ public class NinjaAcademy {
         return newGroup;
     }
 
+    /**
+     * Prompts the user to select a tool package configuration via the console.
+     * 
+     * @param sc the Scanner for user input
+     * @return the constructed NinjaToolPackage
+     */
     private static NinjaToolPackage askPackage(Scanner sc){
         System.out.println("Queda por determinar el paquete que se le dara al equipo, "
                            + "las opciones son:\n\n"
@@ -142,6 +158,12 @@ public class NinjaAcademy {
         return director.construct();
     }
 
+    /**
+     * Collects custom tool quantity specifications from the user.
+     * 
+     * @param sc the Scanner for user input
+     * @return the configured CustomPackageBuilder
+     */
     private static PackageBuilder createCustomPackage(Scanner sc){
         CustomPackageBuilder packageBuilder = new CustomPackageBuilder();
 
@@ -171,21 +193,41 @@ public class NinjaAcademy {
         return packageBuilder;
     }
 
+    /**
+     * Assigns a training ground based on the total ability level of the group.
+     * 
+     * @param totalAbilityLevel the group's total ability level
+     * @return the assigned TrainingGround
+     */
     private static TrainingGround assignGround(int totalAbilityLevel){
         return groundFactory.createTrainingGround(totalAbilityLevel);
     }
 
+    /**
+     * Generates an apology message for any aspirants left without a group.
+     * 
+     * @param listOfAspirants remaining unassigned aspirants
+     * @return the formatted apology message string
+     */
     private static String apologize(Hashtable<Integer, Aspirant> listOfAspirants){
-        String s = "No fue posible asignarle un grupo a los siguiente aspirantes:\n";
+        String s = "========================================================================\n"
+            + "No fue posible asignarle un grupo a los siguiente aspirantes:\n";
 
         Collection<Aspirant> aspirantsLeft = listOfAspirants.values();
         for(Aspirant a: aspirantsLeft){
             s += "- " + a.name() + "\n";
         }
 
-        return s + "Esperamos puedan regresar en otro momento";
+        return s + "Esperamos puedan regresar en otro momento\n"
+            + "========================================================================";
     }
 
+    /**
+     * Formats and returns the final results string for all successfully formed groups.
+     * 
+     * @param groups list of formed groups
+     * @return formatted results summary
+     */
     private static String showResults(ArrayList<Group> groups){
         String s = "Los resultados de los equipos fueron los siguientes:\n\n";
         
@@ -202,18 +244,66 @@ public class NinjaAcademy {
         return "";
     }
 
+    /**
+     * Generates and returns the initial set of aspirants in a hashtable.
+     * 
+     * @return hashtable of aspirants mapped by ID
+     */
     private static Hashtable<Integer, Aspirant> generateAspirants(){
         Hashtable<Integer, Aspirant> listOfAspirants = new Hashtable<>();
 
-        // TODO
+        Aspirant newAspirant = (Aspirant) aspirantFactory.createNinja("Naruto", 12, Clan.OSOMAKI, 2, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+        
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Sasuke", 12, Clan.FUCHIHA, 3, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+        
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Sakura", 12, Clan.NACA, 1, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+        
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Shikamaru", 12, Clan.MORTALIKA, 3, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+        
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Choji", 12, Clan.AKIPICHI, 2, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Hinata", 12, Clan.NACA, 2, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Kiba", 12, Clan.AKIPICHI, 1, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Shino", 12, Clan.MORTALIKA, 3, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Rock Lee", 13, Clan.OSOMAKI, 2, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+        newAspirant = (Aspirant) aspirantFactory.createNinja("Neji", 13, Clan.NACA, 3, Rank.GENIN);
+        listOfAspirants.put(newAspirant.getID(), newAspirant);
+        
 
         return listOfAspirants;
     }
 
+    /**
+     * Generates and returns the initial list of volunteer leaders.
+     * 
+     * @return list of volunteers
+     */
     private static ArrayList<Volunteer> generateVolunteers(){
         ArrayList<Volunteer> listOfVolunteers = new ArrayList<>();
 
-        // TODO
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kakashi", 26, Clan.FUCHIHA, 3, Rank.JONIN));
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Iruka", 23, Clan.NACA, 1, Rank.CHUNIN));
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Asuma", 27, Clan.MORTALIKA, 2, Rank.JONIN));
+
+        // Comment these lines so there's an apology
+        /*
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kurenai", 27, Clan.AKIPICHI, 2, Rank.JONIN));
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Guy", 27, Clan.OSOMAKI, 3, Rank.JONIN));
+        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Tenten", 15, Clan.MORTALIKA, 1, Rank.GENIN));
+        */
 
         return listOfVolunteers;
     }
