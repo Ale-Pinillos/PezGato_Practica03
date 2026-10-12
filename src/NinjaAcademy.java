@@ -5,309 +5,365 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- * Main class of the Academy. It forms the groups of aspirants with their volunteer leaders,
- * assigns each group a tool package and a training ground, and shows the results.
- */
+* Main class of the Academy. It forms the groups of aspirants with their volunteer leaders,
+* assigns each group a tool package and a training ground, and shows the results.
+*/
 public class NinjaAcademy {
 
-    private static GroundFactory groundFactory = new GroundFactory();
-    private static AspirantFactory aspirantFactory = new AspirantFactory();
-    private static VolunteerFactory volunteerFactory = new VolunteerFactory();
+   private static GroundFactory groundFactory = new AbilityGroundFactory();
+   private static AspirantFactory aspirantFactory = new AspirantFactory();
+   private static VolunteerFactory volunteerFactory = new VolunteerFactory();
 
-    /**
-     * Main execution method that runs the ninja group assignment simulation.
-     * 
-     * @command arguments command line arguments
-     */
-    public static void main(String[] args){
+   /**
+    * Main execution method that runs the ninja group assignment simulation.
+    *
+    * @param args command line arguments
+    */
+   public static void main(String[] args){
 
-        // Initialize variables and create ninjas
-        
-        Hashtable<Integer, Aspirant> listOfAspirants = generateAspirants();
-        ArrayList<Volunteer> listOfVolunteers = generateVolunteers();
+       // Initialize variables and create ninjas
+      
+       Hashtable<Integer, Aspirant> listOfAspirants = generateAspirants();
+       ArrayList<Volunteer> listOfVolunteers = generateVolunteers();
 
-        ArrayList<Group> groupsSoFar = new ArrayList<>();
-        
+       ArrayList<Group> groupsSoFar = new ArrayList<>();
+      
 
-        Scanner sc = new Scanner(System.in);
+       Scanner sc = new Scanner(System.in);
 
-        System.out.println("Bienvenidos a La Academia Ninja de la Aldea de las Ciencias, "
-                           + "a continuacion se crearan grupos para las actividades, "
-                           + "se les asignara un paquete y un campo de entrenamiento\n\n");
+       System.out.println("Bienvenidos a La Academia Ninja de la Aldea de las Ciencias, "
+                          + "a continuacion se crearan grupos para las actividades, "
+                          + "se les asignara un paquete y un campo de entrenamiento\n\n");
 
-        int currentGroup = 1;
-        
-        // Groups and packages
-        while(!listOfAspirants.isEmpty() && !listOfVolunteers.isEmpty()){
+       int currentGroup = 1;
+       Iterator<Volunteer> volunteerIterator = listOfVolunteers.iterator();
+      
+       // Groups and packages
+       while(!listOfAspirants.isEmpty() && volunteerIterator.hasNext()){
 
-            System.out.println("=============================================================");
-            System.out.println("Formando grupo " + currentGroup + "\n");
+           System.out.println("=============================================================");
+           System.out.println("Formando grupo " + currentGroup + "\n");
 
-            currentGroup++;
-            Volunteer leader = listOfVolunteers.remove(0);
-            System.out.println("Se asigno como lider a " + leader.name() + "\n");
-            
-            Group newGroup = formGroup(listOfAspirants, leader);
-            System.out.println("Se asignaron todos los aspirantes posibles al grupo\n\n");
+           currentGroup++;
+           Volunteer leader = volunteerIterator.next();
+           System.out.println("Se asigno como lider a " + leader.name() + "\n");
+          
+           Group newGroup = formGroup(listOfAspirants, leader);
+           System.out.println("Se asignaron todos los aspirantes posibles al grupo\n\n");
 
-            //System.out.println(showMainMenu());
-            
-            NinjaToolPackage newPackage = askPackage(sc);
-            newGroup.setToolPackage(newPackage);
-            System.out.println("Se asigno el paquete elegido al equipo");
+           NinjaToolPackage newPackage = askPackage(sc);
+           newGroup.setToolPackage(newPackage);
+           System.out.println("Se asigno el paquete elegido al equipo");
 
-            TrainingGround newGround = assignGround(newGroup.totalAbilityLevel());
-            newGroup.setTrainingGround(newGround);
-            System.out.println("Se asigno un campo de entrenamiento al grupo");
-            System.out.println("=============================================================\n");
+           TrainingGround newGround = assignGround(newGroup.totalAbilityLevel());
+           newGroup.setTrainingGround(newGround);
+           System.out.println("Se asigno un campo de entrenamiento al grupo");
+           System.out.println("=============================================================\n");
 
-            groupsSoFar.add(newGroup);
-        }
+           groupsSoFar.add(newGroup);
+       }
 
-        // Case when there's aspirants without a group
-        if(!listOfAspirants.isEmpty() && listOfVolunteers.isEmpty()){
-            System.out.println(apologize(listOfAspirants));
-        }
+       // Case when there's aspirants without a group
+       if(!listOfAspirants.isEmpty() && !volunteerIterator.hasNext()){
+           System.out.println(apologize(listOfAspirants));
+       }
 
-        // Shows results for every group
-        System.out.println(showResults(groupsSoFar));
-        
-    }
+       // Shows results for every group
+       System.out.println(showResults(groupsSoFar));
+      
+   }
 
-    /**
-     * Forms a new group by pairing a volunteer leader with the maximum allowed number of aspirants.
-     * 
-     * @param listOfAspirants available aspirants hashtable
-     * @param leader the volunteer leading the group
-     * @return the created Group instance
-     */
-    private static Group formGroup(Hashtable<Integer, Aspirant> listOfAspirants, Volunteer leader){
-        Group newGroup = new Group(leader);
+   /**
+    * Forms a new group by pairing a volunteer leader with the maximum allowed number of aspirants.
+    *
+    * @param listOfAspirants available aspirants hashtable
+    * @param leader the volunteer leading the group
+    * @return the created Group instance
+    */
+   private static Group formGroup(Hashtable<Integer, Aspirant> listOfAspirants, Volunteer leader){
+       Group newGroup = new Group(leader);
 
-        int aspirantsLeft = leader.maxAspirants();
+       int aspirantsLeft = leader.maxAspirants();
 
-        // This is to prevent a ConcurrentModificationException
-        ArrayList<Integer> ids = new ArrayList<>(listOfAspirants.keySet());
-        Iterator<Integer> idsIterator = ids.iterator();
+       // This is to prevent a ConcurrentModificationException
+       ArrayList<Integer> ids = new ArrayList<>(listOfAspirants.keySet());
+       Iterator<Integer> idsIterator = ids.iterator();
 
-        while(aspirantsLeft > 0 && idsIterator.hasNext()){
-            int currentID = idsIterator.next();
+       while(aspirantsLeft > 0 && idsIterator.hasNext()){
+           int currentID = idsIterator.next();
 
-            Aspirant currentAspirant = listOfAspirants.remove(currentID);
+           Aspirant currentAspirant = listOfAspirants.remove(currentID);
 
-            newGroup.addAspirant(currentAspirant);
-            aspirantsLeft--;
-        }
+           newGroup.addAspirant(currentAspirant);
+           aspirantsLeft--;
+       }
 
-        return newGroup;
-    }
+       return newGroup;
+   }
 
-    /**
-     * Prompts the user to select a tool package configuration via the console.
-     * 
-     * @param sc the Scanner for user input
-     * @return the constructed NinjaToolPackage
-     */
-    private static NinjaToolPackage askPackage(Scanner sc){
-        System.out.println("Queda por determinar el paquete que se le dara al equipo, "
-                           + "las opciones son:\n\n"
-                           + "1. Paquete Basico\n"
-                           + "2. Paquete Avanzado\n"
-                           + "3. Paquete Tactico\n"
-                           + "4. Paquete Personalizado\n");
+   /**
+    * Prompts the user to select a tool package configuration via the console.
+    *
+    * @param sc the Scanner for user input
+    * @return the constructed NinjaToolPackage
+    */
+   private static NinjaToolPackage askPackage(Scanner sc){
+       System.out.println(showMainMenu());
 
-        System.out.print("Eliga el paquete que se asignara, "
-                           + "usando el numero a la izquierda del nombre: ");
+       System.out.print("Elija el paquete que se asignara, "
+                          + "usando el numero a la izquierda del nombre: ");
 
-        boolean packageChosen = false;
-        int chosen = 0;
+       boolean packageChosen = false;
+       int chosen = 0;
 
-        NinjaToolDirector director;
-        PackageBuilder builder = null;
+       NinjaToolDirector director;
+       PackageBuilder builder = null;
 
-        while(!packageChosen){
-            chosen = sc.nextInt();
+       while(!packageChosen){
+           chosen = readInt(sc);
 
-            switch(chosen){
-            case 1:
-                System.out.println("Se eligio el Paquete Basico\n");
-                builder = new BasicPackageBuilder();
-                packageChosen = true;
-                break;
-            case 2:
-                System.out.println("Se eligio el Paquete Avanzado\n");
-                builder = new TacticalPackageBuilder();
-                packageChosen = true;
-                break;
-            case 3:
-                System.out.println("Se eligio el Paquete Tactico\n");
-                builder = new AdvancedPackageBuilder();
-                packageChosen = true;
-                break;
-            case 4:
-                System.out.println("Se eligio el Paquete Personalizado\n");
-                builder = createCustomPackage(sc);
-                packageChosen = true;
-                break;
-            default:
+           switch(chosen){
+               case 1:
+                   System.out.println("Se eligio el Paquete Basico\n");
+                   builder = new BasicPackageBuilder();
+                   packageChosen = true;
+                   break;
+               case 2:
+                   System.out.println("Se eligio el Paquete Avanzado\n");
+                   builder = new AdvancedPackageBuilder();
+                   packageChosen = true;
+                   break;
+               case 3:
+                   System.out.println("Se eligio el Paquete Tactico\n");
+                   builder = new TacticalPackageBuilder();
+                   packageChosen = true;
+                   break;
+               case 4:
+                   System.out.println("Se eligio el Paquete Personalizado\n");
+                   builder = createCustomPackage(sc);
+                   packageChosen = true;
+                   break;
+               default:
 
-                System.out.println("La eleccion no es una respuesta valida, eliga nuevamente");
-                break;
-            }
-        }
+                   System.out.println("La eleccion no es una respuesta valida, elija nuevamente");
+                   break;
+           }
+       }
 
-        director = new NinjaToolDirector(builder);
+       director = new NinjaToolDirector(builder);
 
-        return director.construct();
-    }
+       return director.construct();
+   }
 
-    /**
-     * Collects custom tool quantity specifications from the user.
-     * 
-     * @param sc the Scanner for user input
-     * @return the configured CustomPackageBuilder
-     */
-    private static PackageBuilder createCustomPackage(Scanner sc){
-        CustomPackageBuilder packageBuilder = new CustomPackageBuilder();
+   /**
+    * Collects custom tool quantity specifications from the user.
+    *
+    * @param sc the Scanner for user input
+    * @return the configured CustomPackageBuilder
+    */
+   private static PackageBuilder createCustomPackage(Scanner sc){
+       CustomPackageBuilder packageBuilder = new CustomPackageBuilder();
 
-        System.out.println("Para el paquete personalizado se debe elegir la "
-                           + "cantidad de cada herramienta\n\n");
+       System.out.println("Para el paquete personalizado se debe elegir la "
+                          + "cantidad de cada herramienta\n\n");
 
-        System.out.print("Eliga la cantidad de kunais para el paquete: ");
-        int amount = sc.nextInt();
-        packageBuilder.addNumOfKunais(amount);
+       System.out.print("Elija la cantidad de kunais para el paquete: ");
+       int amount = readAmount(sc);
+       packageBuilder.addKunais(amount);
 
-        System.out.print("Eliga la cantidad de shurikens para el paquete: ");
-        amount = sc.nextInt();
-        packageBuilder.addNumOfShurikens(amount);
+       System.out.print("Elija la cantidad de shurikens para el paquete: ");
+       amount = readAmount(sc);
+       packageBuilder.addShurikens(amount);
 
-        System.out.print("Eliga la cantidad de papeles bomba para el paquete: ");
-        amount = sc.nextInt();
-        packageBuilder.addNumOfExplosiveTags(amount);
+       System.out.print("Elija la cantidad de papeles bomba para el paquete: ");
+       amount = readAmount(sc);
+       packageBuilder.addExplosiveTags(amount);
 
-        System.out.print("Eliga la cantidad de bombas de humo para el paquete: ");
-        amount = sc.nextInt();
-        packageBuilder.addNumOfSmokeBombs(amount);
+       System.out.print("Elija la cantidad de bombas de humo para el paquete: ");
+       amount = readAmount(sc);
+       packageBuilder.addSmokeBombs(amount);
 
-        System.out.print("Eliga la cantidad de botiquines para el paquete: ");
-        amount = sc.nextInt();
-        packageBuilder.addNumOfMedKits(amount);
+       System.out.print("Elija la cantidad de botiquines para el paquete: ");
+       amount = readAmount(sc);
+       packageBuilder.addMedKits(amount);
 
-        return packageBuilder;
-    }
+       return packageBuilder;
+   }
 
-    /**
-     * Assigns a training ground based on the total ability level of the group.
-     * 
-     * @param totalAbilityLevel the group's total ability level
-     * @return the assigned TrainingGround
-     */
-    private static TrainingGround assignGround(int totalAbilityLevel){
-        return groundFactory.createTrainingGround(totalAbilityLevel);
-    }
+   /**
+    * Reads an integer from the console, asking again while the input is not a valid integer.
+    *
+    * @param sc the Scanner for user input
+    * @return the integer read
+    */
+   private static int readInt(Scanner sc){
+       while(!sc.hasNextInt()){
+           sc.next();
+           System.out.print("Eso no es un numero entero, intente nuevamente: ");
+       }
 
-    /**
-     * Generates an apology message for any aspirants left without a group.
-     * 
-     * @param listOfAspirants remaining unassigned aspirants
-     * @return the formatted apology message string
-     */
-    private static String apologize(Hashtable<Integer, Aspirant> listOfAspirants){
-        String s = "========================================================================\n"
-            + "No fue posible asignarle un grupo a los siguiente aspirantes:\n";
+       return sc.nextInt();
+   }
 
-        Collection<Aspirant> aspirantsLeft = listOfAspirants.values();
-        for(Aspirant a: aspirantsLeft){
-            s += "- " + a.name() + "\n";
-        }
+   /**
+    * Reads a non-negative integer from the console, asking again while the input is negative
+    * or not a valid integer.
+    *
+    * @param sc the Scanner for user input
+    * @return the non-negative integer read
+    */
+   private static int readAmount(Scanner sc){
+       int amount = readInt(sc);
 
-        return s + "Esperamos puedan regresar en otro momento\n"
-            + "========================================================================";
-    }
+       while(amount < 0){
+           System.out.print("La cantidad no puede ser negativa, intente nuevamente: ");
+           amount = readInt(sc);
+       }
 
-    /**
-     * Formats and returns the final results string for all successfully formed groups.
-     * 
-     * @param groups list of formed groups
-     * @return formatted results summary
-     */
-    private static String showResults(ArrayList<Group> groups){
-        String s = "Los resultados de los equipos fueron los siguientes:\n\n";
-        
-        for(Group g: groups){
-            s += g.toString() + "\n\n";
-        }
+       return amount;
+   }
 
-        return s;
-    }
+   /**
+    * Assigns a training ground based on the total ability level of the group.
+    *
+    * @param totalAbilityLevel the group's total ability level
+    * @return the assigned TrainingGround
+    */
+   private static TrainingGround assignGround(int totalAbilityLevel){
+       return groundFactory.createTrainingGround(totalAbilityLevel);
+   }
 
+   /**
+    * Generates an apology message for any aspirants left without a group.
+    *
+    * @param listOfAspirants remaining unassigned aspirants
+    * @return the formatted apology message string
+    */
+   private static String apologize(Hashtable<Integer, Aspirant> listOfAspirants){
+       String s = "========================================================================\n"
+           + "No fue posible asignarle un grupo a los siguientes aspirantes:\n";
 
-    // LEFT TO CODE
-    private static String showMainMenu(){
-        return "";
-    }
+       Collection<Aspirant> aspirantsLeft = listOfAspirants.values();
+       for(Aspirant a: aspirantsLeft){
+           s += "- " + a.name() + "\n";
+       }
 
-    /**
-     * Generates and returns the initial set of aspirants in a hashtable.
-     * 
-     * @return hashtable of aspirants mapped by ID
-     */
-    private static Hashtable<Integer, Aspirant> generateAspirants(){
-        Hashtable<Integer, Aspirant> listOfAspirants = new Hashtable<>();
+       return s + "Esperamos puedan regresar en otro momento\n"
+           + "========================================================================";
+   }
 
-        Aspirant newAspirant = (Aspirant) aspirantFactory.createNinja("Naruto", 12, Clan.OSOMAKI, 2, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
-        
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Sasuke", 12, Clan.FUCHIHA, 3, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
-        
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Sakura", 12, Clan.NACA, 1, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
-        
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Shikamaru", 12, Clan.MORTALIKA, 3, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
-        
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Choji", 12, Clan.AKIPICHI, 2, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
+   /**
+    * Formats and returns the final results string for all successfully formed groups.
+    *
+    * @param groups list of formed groups
+    * @return formatted results summary
+    */
+   private static String showResults(ArrayList<Group> groups){
+       String s = "Los resultados de los equipos fueron los siguientes:\n\n";
+      
+       for(Group g: groups){
+           s += g.toString() + "\n\n";
+       }
 
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Hinata", 12, Clan.NACA, 2, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
+       return s;
+   }
 
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Kiba", 12, Clan.AKIPICHI, 1, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
+   /**
+    * Builds the text of the menu with the available tool packages.
+    *
+    * @return the text of the package menu
+    */
+   private static String showMainMenu(){
+       return "Queda por determinar el paquete que se le dara al equipo, "
+              + "las opciones son:\n\n"
+              + "1. Paquete Basico\n"
+              + "2. Paquete Avanzado\n"
+              + "3. Paquete Tactico\n"
+              + "4. Paquete Personalizado\n";
+   }
 
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Shino", 12, Clan.MORTALIKA, 3, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
+   /**
+    * Generates and returns the initial set of aspirants in a hashtable.
+    *
+    * @return hashtable of aspirants mapped by ID
+    */
+   private static Hashtable<Integer, Aspirant> generateAspirants(){
+       Hashtable<Integer, Aspirant> listOfAspirants = new Hashtable<>();
 
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Rock Lee", 13, Clan.OSOMAKI, 2, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
+       Aspirant newAspirant = (Aspirant) aspirantFactory.createNinja("Naruto", 12, Clan.OSOMAKI, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+      
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Sasuke", 12, Clan.FUCHIHA, 3, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+      
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Sakura", 12, Clan.NACA, 1, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+      
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Shikamaru", 12, Clan.MORTALIKA, 3, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+      
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Choji", 12, Clan.AKIPICHI, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-        newAspirant = (Aspirant) aspirantFactory.createNinja("Neji", 13, Clan.NACA, 3, Rank.GENIN);
-        listOfAspirants.put(newAspirant.getID(), newAspirant);
-        
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Hinata", 12, Clan.NACA, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-        return listOfAspirants;
-    }
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Kiba", 12, Clan.AKIPICHI, 1, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-    /**
-     * Generates and returns the initial list of volunteer leaders.
-     * 
-     * @return list of volunteers
-     */
-    private static ArrayList<Volunteer> generateVolunteers(){
-        ArrayList<Volunteer> listOfVolunteers = new ArrayList<>();
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Shino", 12, Clan.MORTALIKA, 3, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kakashi", 26, Clan.FUCHIHA, 3, Rank.JONIN));
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Iruka", 23, Clan.NACA, 1, Rank.CHUNIN));
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Asuma", 27, Clan.MORTALIKA, 2, Rank.JONIN));
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Rock Lee", 13, Clan.OSOMAKI, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-        // Comment these lines so there's an apology
-        /*
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kurenai", 27, Clan.AKIPICHI, 2, Rank.JONIN));
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Guy", 27, Clan.OSOMAKI, 3, Rank.JONIN));
-        listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Tenten", 15, Clan.MORTALIKA, 1, Rank.GENIN));
-        */
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Neji", 13, Clan.NACA, 3, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
 
-        return listOfVolunteers;
-    }
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Ino", 12, Clan.MORTALIKA, 1, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Konohamaru", 11, Clan.OSOMAKI, 1, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Temari", 13, Clan.AKIPICHI, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Kankuro", 13, Clan.FUCHIHA, 1, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Gaara", 12, Clan.NACA, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Hanabi", 11, Clan.MORTALIKA, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Boruto", 11, Clan.OSOMAKI, 2, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+
+       newAspirant = (Aspirant) aspirantFactory.createNinja("Sarada", 12, Clan.FUCHIHA, 3, Rank.GENIN);
+       listOfAspirants.put(newAspirant.getID(), newAspirant);
+      
+
+       return listOfAspirants;
+   }
+
+   /**
+    * Generates and returns the initial list of volunteer leaders.
+    *
+    * @return list of volunteers
+    */
+   private static ArrayList<Volunteer> generateVolunteers(){
+       ArrayList<Volunteer> listOfVolunteers = new ArrayList<>();
+
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kakashi", 26, Clan.FUCHIHA, 6, Rank.JONIN));
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Iruka", 23, Clan.NACA, 4, Rank.CHUNIN));
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Asuma", 27, Clan.MORTALIKA, 5, Rank.JONIN));
+
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Kurenai", 27, Clan.AKIPICHI, 5, Rank.JONIN));
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Guy", 27, Clan.OSOMAKI, 6, Rank.JONIN));
+       listOfVolunteers.add((Volunteer) volunteerFactory.createNinja("Tenten", 15, Clan.MORTALIKA, 4, Rank.GENIN));
+
+       return listOfVolunteers;
+   }
 }

@@ -67,7 +67,6 @@ public class CustomPackageBuilder extends PackageBuilder {
     public void addMedKits(int newAmount){
         numOfMedKits += newAmount;
     }
-    //
 
     /**
      * Builds and adds the custom accumulated quantity of kunais to the package.

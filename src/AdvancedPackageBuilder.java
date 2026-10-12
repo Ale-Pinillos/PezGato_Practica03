@@ -25,7 +25,7 @@ public class AdvancedPackageBuilder extends PackageBuilder {
     /**
      * Adds the advanced amount of kunais to the package.
      */
-    @Override
+    @Override 
     public void buildKunais(){
         tools.put(new NinjaTool("Kunais", 255), NUMBER_OF_KUNAIS);
     }

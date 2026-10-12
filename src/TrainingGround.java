@@ -1,8 +1,7 @@
 
 /**
- * Factory that creates the {@link TrainingGround} that corresponds to a group,
- * according to its total ability level.
- */
+* Abstract training ground. Each concrete ground defines its own name and description.
+*/
 public abstract class TrainingGround {
     
     /** Name of the training ground. */
