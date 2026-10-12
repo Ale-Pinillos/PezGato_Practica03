@@ -1,3 +1,7 @@
+
+/**
+ * A candidate to become a ninja. Each aspirant receives a unique, consecutive ID when it is created.
+ */
 public class Aspirant implements Ninja {
 
     private static int newID = 1;
@@ -7,7 +11,6 @@ public class Aspirant implements Ninja {
     private int age;
     private Clan clan;
     private int abilityLevel;
-
 
     /**
      * Constructs a new Aspirant with the specified details and automatically assigns a unique ID.
@@ -76,22 +79,22 @@ public class Aspirant implements Ninja {
     public String toString(){
         String clanString = "";
         switch(this.clan){
-        case FUCHIHA:
-            clanString = "Fuchiha";
-            break;
-        case OSOMAKI:
-            clanString = "Osomaki";
-            break;
-        case NACA:
-            clanString = "Naca";
-            break;
-        case MORTALIKA:
-            clanString = "Mortalika";
-            break;
-        case AKIPICHI:
-            clanString = "Akipichi";
-            break;
+            case FUCHIHA:
+                clanString = "Fuchiha";
+                break;
+            case OSOMAKI:
+                clanString = "Osomaki";
+                break;
+            case NACA:
+                clanString = "Naca";
+                break;
+            case MORTALIKA:
+                clanString = "Mortalika";
+                break;
+            case AKIPICHI:
+                clanString = "Akipichi";
+                break;
         }
-        return name + ", " + age + ", clan " + clanString + ", con un nivel de abilidad de " + abilityLevel;
+        return name + ", " + age + ", clan " + clanString + ", con un nivel de habilidad de " + abilityLevel;
     }
 }

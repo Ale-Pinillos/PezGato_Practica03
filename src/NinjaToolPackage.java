@@ -1,15 +1,14 @@
 import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * Tool package assigned to a group.
+ * It stores each {@link NinjaTool} together with its quantity.
+ */
 public class NinjaToolPackage{
 
     private String name;
     private Hashtable<NinjaTool, Integer> listOfTools;
-
-    /**
-     * Default constructor for NinjaToolPackage.
-     */
-    public NinjaToolPackage(){}
 
     /**
      * Sets the name of the package.
@@ -60,15 +59,18 @@ public class NinjaToolPackage{
      * 
      * @return the string description of the package
      */
+    @Override
     public String toString(){
 
-        String string = "El paquete " + name + ", que contiene: \n";
+        String string = "el paquete " + name + ", que contiene: \n";
 
         Set<NinjaTool> tools = listOfTools.keySet();
         
         for(NinjaTool tool: tools){
-            string += "- " + listOfTools.get(tool) + " " + tool.name()
-                + " con un peso de " + tool.weight() + " por cada uno\n";
+            if(listOfTools.get(tool) > 0){
+                string += "- " + listOfTools.get(tool) + " " + tool.name()
+                    + " con un peso de " + tool.weight() + " por cada uno\n";
+            }
         }
         
         return string;

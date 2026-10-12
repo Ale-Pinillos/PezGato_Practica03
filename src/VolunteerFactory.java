@@ -1,3 +1,7 @@
+
+/**
+ * Concrete creator of the Factory Method pattern that creates {@link Volunteer} objects.
+ */
 public class VolunteerFactory extends NinjaFactory {
 
     /**

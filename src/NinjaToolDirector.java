@@ -1,3 +1,8 @@
+
+/**
+ * Director that knows the order of the build steps and runs them on the
+ * {@link PackageBuilder} it receives, without knowing the quantity of each tool.
+ */
 public class NinjaToolDirector {
     
     private PackageBuilder toolPackageBuilder;

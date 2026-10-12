@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 
+/**
+ * A group of the Academy: a volunteer leader with the aspirants under their charge,
+ * plus the tool package and the training ground assigned to it.
+ */
 public class Group {
 
     private Volunteer leader;
     private ArrayList<Aspirant> aspirants;
-    private NinjaToolPackage currentToolPackage;
-    private TrainingGround currentTrainingGround;
+    private NinjaToolPackage toolPackage;
+    private TrainingGround trainingGround;
 
     /**
      * Constructs a new Group with the specified volunteer leader and initializes 
@@ -17,8 +21,8 @@ public class Group {
         this.leader = leader;
         aspirants = new ArrayList<>();
         
-        currentToolPackage = null;
-        currentTrainingGround = null;
+        toolPackage = null;
+        trainingGround = null;
     }
 
     /**
@@ -53,17 +57,17 @@ public class Group {
      * 
      * @return the assigned NinjaToolPackage
      */
-    public NinjaToolPackage currentToolPackage(){
-        return currentToolPackage;
+    public NinjaToolPackage toolPackage(){
+        return toolPackage;
     }
 
     /**
      * Returns the training ground currently assigned to the group.
      * 
-     * @return the assigned TrainingGround
+     * @return the assigned trainingGround
      */
-    public TrainingGround currentTrainingGround(){
-        return currentTrainingGround;
+    public TrainingGround trainingGround(){
+        return trainingGround;
     }
 
     /**
@@ -72,7 +76,7 @@ public class Group {
      * @param newToolPackage the tool package to assign
      */
     public void setToolPackage(NinjaToolPackage newToolPackage){ 
-        this.currentToolPackage = newToolPackage;
+        this.toolPackage = newToolPackage;
     }
 
     /**
@@ -81,7 +85,7 @@ public class Group {
      * @param newTrainingGround the training ground to assign
      */
     public void setTrainingGround(TrainingGround newTrainingGround){
-        this.currentTrainingGround = newTrainingGround;
+        this.trainingGround = newTrainingGround;
     }
 
     /**
@@ -89,6 +93,7 @@ public class Group {
      * 
      * @return string representation of the group
      */
+    @Override 
     public String toString(){
         String string = "==========================================================\n"
             + "El grupo tiene asignado como lider a: \n"
@@ -98,8 +103,9 @@ public class Group {
             string += "- " + aspirant.toString() + "\n";
         }
 
-        string += "\nAl grupo se le fue asignado " + this.currentToolPackage.toString() + "\n";
-        string += "Y su entrenamiento sera en " + this.currentTrainingGround.toString() + "\n";
+        string += "\nAl grupo se le asigno " + this.toolPackage.toString();
+        string += "Peso total del paquete: " + this.toolPackage.totalWeight() + " gramos\n\n";
+        string += "Y su entrenamiento sera en " + this.trainingGround.toString() + "\n";
         string += "==========================================================";
         
         return string;

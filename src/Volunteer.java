@@ -1,3 +1,7 @@
+
+/**
+ * A volunteer ninja that leads a group. The maximum number of aspirants it can lead depends on its rank.
+ */
 public class Volunteer implements Ninja {
 
     private String name;
@@ -83,37 +87,38 @@ public class Volunteer implements Ninja {
      * 
      * @return string of volunteer details
      */
+    @Override
     public String toString(){
         String clanString = "";
         switch(this.clan){
-        case FUCHIHA:
-            clanString = "Fuchiha";
-            break;
-        case OSOMAKI:
-            clanString = "Osomaki";
-            break;
-        case NACA:
-            clanString = "Naca";
-            break;
-        case MORTALIKA:
-            clanString = "Mortalika";
-            break;
-        case AKIPICHI:
-            clanString = "Akipichi";
-            break;
+            case FUCHIHA:
+                clanString = "Fuchiha";
+                break;
+            case OSOMAKI:
+                clanString = "Osomaki";
+                break;
+            case NACA:
+                clanString = "Naca";
+                break;
+            case MORTALIKA:
+                clanString = "Mortalika";
+                break;
+            case AKIPICHI:
+                clanString = "Akipichi";
+                break;
         }
 
         String rankString = "";
         switch(rank){
-        case GENIN:
-            rankString = "Genin";
-            break;
-        case CHUNIN:
-            rankString = "Chunin";
-            break;
-        case JONIN:
-            rankString = "Jonin";
+            case GENIN:
+                rankString = "Genin";
+                break;
+            case CHUNIN:
+                rankString = "Chunin";
+                break;
+            case JONIN:
+                rankString = "Jonin";
         }
-        return name + ", " + age + ", clan " + clanString + ", con un nivel de abilidad de " + abilityLevel + " y rango " + rankString;
+        return name + ", " + age + ", clan " + clanString + ", con un nivel de habilidad de " + abilityLevel + " y rango " + rankString;
     }
 }

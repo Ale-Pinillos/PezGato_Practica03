@@ -1,3 +1,7 @@
+
+/**
+ * A ninja tool (e.g. kunais or shurikens) with its name and unit weight.
+ */
 public class NinjaTool {
     
     private String name;

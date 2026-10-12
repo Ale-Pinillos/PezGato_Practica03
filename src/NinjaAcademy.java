@@ -1,10 +1,13 @@
-import java.util.Hashtable;
-import java.util.Set;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Scanner;
 
+/**
+ * Main class of the Academy. It forms the groups of aspirants with their volunteer leaders,
+ * assigns each group a tool package and a training ground, and shows the results.
+ */
 public class NinjaAcademy {
 
     private static GroundFactory groundFactory = new GroundFactory();

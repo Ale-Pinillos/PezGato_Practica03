@@ -1,6 +1,13 @@
+
+/**
+ * Factory that creates the {@link TrainingGround} that corresponds to a group,
+ * according to its total ability level.
+ */
 public abstract class TrainingGround {
     
+    /** Name of the training ground. */
     protected String name;
+    /** Description of the training ground. */
     protected String description;
 
     /**
@@ -26,6 +33,7 @@ public abstract class TrainingGround {
      * 
      * @return string of the training ground
      */
+    @Override
     public String toString(){
         return name + ": " + description;
     }

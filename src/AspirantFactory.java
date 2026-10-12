@@ -1,3 +1,8 @@
+
+/**
+ * Concrete creator that creates {@link Aspirant} objects.
+ * The rank parameter is ignored because aspirants have no rank.
+ */
 public class AspirantFactory extends NinjaFactory {
 
     /**

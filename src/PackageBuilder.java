@@ -1,8 +1,14 @@
 import java.util.Hashtable;
 
+/**
+ * Abstract builder that declares the steps to assemble a {@link NinjaToolPackage}.
+ * Each concrete builder decides the quantity of every tool.
+ */
 public abstract class PackageBuilder {
 
+    /** Name of the package being built. */
     protected String name;
+    /** Tools of the package being built, mapped to their quantity. */
     protected Hashtable<NinjaTool, Integer> tools;
 
     /** Builds the quantity of kunais for the package. */
@@ -31,7 +37,7 @@ public abstract class PackageBuilder {
         NinjaToolPackage newPackage = new NinjaToolPackage();
 
         newPackage.setName(name);
-        newPackage.setTools(tools); // Probably better than addTool()
+        newPackage.setTools(tools);
 
         return newPackage;
     }

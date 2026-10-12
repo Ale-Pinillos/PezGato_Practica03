@@ -1,3 +1,8 @@
+
+/**
+ * Common interface of the ninjas of the Academy.
+ * It defines the data shared by aspirants and volunteers.
+ */
 public interface Ninja {
 
     /**

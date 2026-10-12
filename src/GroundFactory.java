@@ -1,3 +1,8 @@
+
+/**
+ * Factory that creates the {@link TrainingGround} that corresponds to a group,
+ * according to its total ability level.
+ */
 public class GroundFactory {
 
     /**

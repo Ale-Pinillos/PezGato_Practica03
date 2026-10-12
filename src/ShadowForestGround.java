@@ -1,3 +1,7 @@
+
+/**
+ * Training ground for groups with a total ability level between 8 and 11.
+ */
 public class ShadowForestGround extends TrainingGround {
 
     /**
@@ -5,6 +9,6 @@ public class ShadowForestGround extends TrainingGround {
      */
     public ShadowForestGround(){
         name = "Bosque sombrio";
-        description = "TODO";
+        description = "Un bosque tan espeso que el sol apenas toca el suelo. Hay mas de un sendero falso entre los arboles, y quien lo cruza aprende a fiarse del oido antes que de los ojos.";
     }
 }

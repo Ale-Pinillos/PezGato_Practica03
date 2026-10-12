@@ -1,5 +1,9 @@
 import java.util.Hashtable;
 
+/**
+ * Concrete builder for the tactical tool package.
+ * Each build step adds a fixed quantity of one tool, defined by the constants of this class.
+ */
 public class TacticalPackageBuilder extends PackageBuilder {
 
     private static final int NUMBER_OF_KUNAIS = 3;

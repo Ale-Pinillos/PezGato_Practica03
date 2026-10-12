@@ -1,5 +1,10 @@
 import java.util.Hashtable;
 
+/**
+ * Concrete builder for the custom tool package.
+ * Unlike the prefabricated builders, the quantity of each tool is accumulated with the
+ * add methods before the build steps are executed.
+ */
 public class CustomPackageBuilder extends PackageBuilder {
     
     private int numOfKunais;
@@ -23,7 +28,7 @@ public class CustomPackageBuilder extends PackageBuilder {
      * 
      * @param newAmount the amount to add
      */
-    public void addNumOfKunais(int newAmount){
+    public void addKunais(int newAmount){
         numOfKunais += newAmount;
     }
 
@@ -32,7 +37,7 @@ public class CustomPackageBuilder extends PackageBuilder {
      * 
      * @param newAmount the amount to add
      */
-    public void addNumOfShurikens(int newAmount){
+    public void addShurikens(int newAmount){
         numOfShurikens += newAmount;
     }
 
@@ -41,7 +46,7 @@ public class CustomPackageBuilder extends PackageBuilder {
      * 
      * @param newAmount the amount to add
      */
-    public void addNumOfExplosiveTags(int newAmount){
+    public void addExplosiveTags(int newAmount){
         numOfExplosiveTags += newAmount;
     }
 
@@ -50,7 +55,7 @@ public class CustomPackageBuilder extends PackageBuilder {
      * 
      * @param newAmount the amount to add
      */
-    public void addNumOfSmokeBombs(int newAmount){
+    public void addSmokeBombs(int newAmount){
         numOfSmokeBombs += newAmount;
     }
 
@@ -59,7 +64,7 @@ public class CustomPackageBuilder extends PackageBuilder {
      * 
      * @param newAmount the amount to add
      */
-    public void addNumOfMedKits(int newAmount){
+    public void addMedKits(int newAmount){
         numOfMedKits += newAmount;
     }
     //

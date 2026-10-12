@@ -1,3 +1,7 @@
+
+/**
+ * Abstract creator. Subclasses decide which type of {@link Ninja} is created.
+ */
 public abstract class NinjaFactory {
 
     /**
